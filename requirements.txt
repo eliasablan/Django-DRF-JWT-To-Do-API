@@ -1,0 +1,18 @@
+argon2-cffi @ file:///opt/conda/conda-bld/argon2-cffi_1645000214183/work
+argon2-cffi-bindings @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/croot-wbf5edig/argon2-cffi-bindings_1644845754377/work
+asgiref @ file:///home/conda/feedstock_root/build_artifacts/asgiref_1685243452975/work
+backports.zoneinfo @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_ce_j7dts93/croots/recipe/backports.zoneinfo_1661287536126/work
+cffi @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_ab19r4bji3/croot/cffi_1670423206034/work
+Django @ file:///home/conda/feedstock_root/build_artifacts/django_1693929744596/work
+django-filter==23.3
+djangorestframework==3.14.0
+djangorestframework-simplejwt==5.3.0
+importlib-metadata==6.8.0
+Markdown==3.4.4
+pycparser @ file:///tmp/build/80754af9/pycparser_1636541352034/work
+PyJWT==2.8.0
+pytz==2023.3.post1
+sqlparse @ file:///private/var/folders/k1/30mswbxs7r1g6zwn8y4fyt500000gp/T/abs_16ptvrhamb/croot/sqlparse_1690901943673/work
+typing_extensions @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_1fdywrbp_3/croot/typing_extensions_1690297474455/work
+whitenoise @ file:///home/conda/feedstock_root/build_artifacts/whitenoise_1686933972273/work
+zipp==3.17.0
