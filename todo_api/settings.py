@@ -1,6 +1,8 @@
 from pathlib import Path
 from datetime import timedelta
 from decouple import config as dc_config
+import dj_database_url
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -16,6 +18,10 @@ SECRET_KEY = dc_config('SECRET_KEY')
 DEBUG = dc_config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = []
+
+RENDER_EXTERNAL_HOSTNAME = dc_config('RENDER_EXTERNAL_HOSTNAME', default=False)
+if RENDER_EXTERNAL_HOSTNAME:
+      ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -101,6 +107,7 @@ WSGI_APPLICATION = 'todo_api.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# Development
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -109,16 +116,12 @@ DATABASES = {
 }
 
 # Production
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': dc_config('DB_NAME'),
-#         'USER': dc_config('DB_USER'),
-#         'PASSWORD': dc_config('DB_PASSWORD'),
-#         'HOST': dc_config('DB_HOST'),
-#         'PORT': '',
-#     }
-# }
+DATABASES = {
+    'default': dj_database_url.config(
+         default='sqlite:///db.sqlite3',
+         conn_max_age=600
+    )
+}
 
 
 # Password validation
@@ -162,7 +165,16 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
+# This setting tells Django at which URL static files are going to be served to the user.
+# Here, they well be accessible at your-domain.onrender.com/static/...
+STATIC_URL = '/static/'
+# Following settings only make sense on production and may break development environments.
+if not DEBUG:    # Tell Django to copy statics to the `staticfiles` directory
+    # in your application directory on Render.
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+    # Turn on WhiteNoise storage backend that takes care of compressing static files
+    # and creating unique names for each version so they can safely be cached forever.
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -173,14 +185,6 @@ CORS_ALLOWED_ORIGINS = [
     'http://localhost:5173',
     'http://localhost:3000'
 ]
-
-
-
-
-
-
-
-STATIC_URL = "static/"
 
 DEBUG_TOOLBAR_PANELS = [
     'debug_toolbar.panels.versions.VersionsPanel',
