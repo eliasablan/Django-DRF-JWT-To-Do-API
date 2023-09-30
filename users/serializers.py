@@ -5,7 +5,7 @@ from decouple import config as dc_config
 SUPERUSER_EMAIL = dc_config('SUPERUSER_EMAIL')
 
 class UserSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=False)
+    password = serializers.CharField(write_only=True)
 
     class Meta:
         model = User
