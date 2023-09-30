@@ -17,7 +17,9 @@ SECRET_KEY = dc_config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = dc_config('DEBUG', cast=bool)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '1.0.0.127.in-addr.arpa:8000'
+]
 
 RENDER_EXTERNAL_HOSTNAME = dc_config('RENDER_EXTERNAL_HOSTNAME', default=False)
 if RENDER_EXTERNAL_HOSTNAME:
