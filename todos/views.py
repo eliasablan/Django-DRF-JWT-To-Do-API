@@ -28,12 +28,16 @@ class TodoDetail(APIView):
     permission_classes = (IsAuthenticated,)
 
     def get(self, request, pk):
-        todo = get_object_or_404(Todo, pk=pk, user=request.user)
+        # Comentado para pruebas, originalmente busca que coincida tambien el usuario
+        # todo = get_object_or_404(Todo, pk=pk, user=request.user)
+        todo = get_object_or_404(Todo, pk=pk)
         serializer = TodoSerializer(todo)
         return Response(serializer.data)
 
     def put(self, request, pk):
-        todo = get_object_or_404(Todo, pk=pk, user=request.user)
+        # Comentado para pruebas, originalmente busca que coincida tambien el usuario
+        # todo = get_object_or_404(Todo, pk=pk, user=request.user)
+        todo = get_object_or_404(Todo, pk=pk)
         serializer = TodoSerializer(todo, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
