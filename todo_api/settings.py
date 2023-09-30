@@ -68,6 +68,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     # Local apps
     'todos',
+    'users',
 ]
 
 MIDDLEWARE = [
