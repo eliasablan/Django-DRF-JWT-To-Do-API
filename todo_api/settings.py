@@ -188,7 +188,10 @@ INTERNAL_IPS = [
 ]
 
 if DEBUG: # Development
+    ALLOWED_HOSTS = env.list()
     ALLOWED_HOSTS = [dc_config('ALLOWED_HOSTS_DEV')]
+    for host in ALLOWED_HOSTS:
+        print(host)
     
     DEBUG_TOOLBAR_PANELS = [
         'debug_toolbar.panels.versions.VersionsPanel',
