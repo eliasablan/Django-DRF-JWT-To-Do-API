@@ -188,7 +188,7 @@ INTERNAL_IPS = [
 ]
 
 if DEBUG: # Development
-    ALLOWED_HOSTS = [dc_config('ALLOWED_HOSTS_PROD')]
+    ALLOWED_HOSTS = [dc_config('ALLOWED_HOSTS_DEV')]
     
     DEBUG_TOOLBAR_PANELS = [
         'debug_toolbar.panels.versions.VersionsPanel',
