@@ -15,13 +15,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = dc_config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = dc_config('DEBUG', cast=bool)
-
-ALLOWED_HOSTS = []
-
-RENDER_EXTERNAL_HOSTNAME = dc_config('RENDER_EXTERNAL_HOSTNAME', default=False)
-if RENDER_EXTERNAL_HOSTNAME:
-      ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+DEBUG = dc_config('DEBUG', default=False, cast=bool)
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -72,11 +66,11 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "debug_toolbar.middleware.DebugToolbarMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -188,29 +182,38 @@ CORS_ALLOWED_ORIGINS = [
     'https://react-to-do-olive.vercel.app'
 ]
 
-DEBUG_TOOLBAR_PANELS = [
-    'debug_toolbar.panels.versions.VersionsPanel',
-    'debug_toolbar.panels.timer.TimerPanel',
-    'debug_toolbar.panels.settings.SettingsPanel',
-    'debug_toolbar.panels.headers.HeadersPanel',
-    'debug_toolbar.panels.request.RequestPanel',
-    'debug_toolbar.panels.sql.SQLPanel',
-    'debug_toolbar.panels.staticfiles.StaticFilesPanel',
-    'debug_toolbar.panels.templates.TemplatesPanel',
-    'debug_toolbar.panels.cache.CachePanel',
-    'debug_toolbar.panels.signals.SignalsPanel',
-    'debug_toolbar.panels.logging.LoggingPanel',
-    'debug_toolbar.panels.redirects.RedirectsPanel',
-]
-
-def show_toolbar(request):
-    return True
-
-DEBUG_TOOLBAR_CONFIG = {
-    'INTERCEPT_REDIRECTS': False,
-    'SHOW_TOOLBAR_CALLBACK': show_toolbar
-}
 
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
+
+if DEBUG: # Development
+    ALLOWED_HOSTS = [dc_config('ALLOWED_HOSTS_DEV')]
+    
+    DEBUG_TOOLBAR_PANELS = [
+        'debug_toolbar.panels.versions.VersionsPanel',
+        'debug_toolbar.panels.timer.TimerPanel',
+        'debug_toolbar.panels.settings.SettingsPanel',
+        'debug_toolbar.panels.headers.HeadersPanel',
+        'debug_toolbar.panels.request.RequestPanel',
+        'debug_toolbar.panels.sql.SQLPanel',
+        'debug_toolbar.panels.staticfiles.StaticFilesPanel',
+        'debug_toolbar.panels.templates.TemplatesPanel',
+        'debug_toolbar.panels.cache.CachePanel',
+        'debug_toolbar.panels.signals.SignalsPanel',
+        'debug_toolbar.panels.logging.LoggingPanel',
+        'debug_toolbar.panels.redirects.RedirectsPanel',
+    ]
+
+    def show_toolbar(request):
+        return True
+
+    DEBUG_TOOLBAR_CONFIG = {
+        'INTERCEPT_REDIRECTS': False,
+        'SHOW_TOOLBAR_CALLBACK': show_toolbar
+    }
+else: # Production
+    ALLOWED_HOSTS = [dc_config('ALLOWED_HOSTS_PROD')]
+    RENDER_EXTERNAL_HOSTNAME = dc_config('RENDER_EXTERNAL_HOSTNAME', default=False)
+    if RENDER_EXTERNAL_HOSTNAME:
+         ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
