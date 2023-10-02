@@ -183,11 +183,6 @@ CORS_ALLOWED_ORIGINS = [
     'https://react-to-do-olive.vercel.app',
 ]
 
-
-INTERNAL_IPS = [
-    "127.0.0.1",
-]
-
 if DEBUG: # Development
     ALLOWED_HOSTS = env.list('ALLOWED_HOSTS_DEV')
         
