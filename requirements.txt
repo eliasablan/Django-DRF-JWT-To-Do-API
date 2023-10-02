@@ -2,7 +2,6 @@ argon2-cffi==21.3.0
 argon2-cffi-bindings==21.2.0
 asgiref==3.7.2
 backports.zoneinfo==0.2.1
-ca-certificates==2023.08.22
 cffi==1.15.1
 dj-database-url==2.1.0
 Django==4.2.5
