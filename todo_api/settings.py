@@ -180,7 +180,9 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOWED_ORIGINS = [
+    'react-to-do-olive.vercel.app',
     'https://react-to-do-olive.vercel.app',
+    '117.0.0.0'
 ]
 
 if DEBUG: # Development
@@ -210,6 +212,7 @@ if DEBUG: # Development
     }
 else: # Production
     ALLOWED_HOSTS = env.list('ALLOWED_HOSTS_PROD')
+    ALLOWED_HOSTS.append('117.0.0.0')
 
     RENDER_EXTERNAL_HOSTNAME = env('RENDER_EXTERNAL_HOSTNAME')
     if RENDER_EXTERNAL_HOSTNAME:
