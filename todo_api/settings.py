@@ -182,7 +182,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ALLOWED_ORIGINS = [
     'react-to-do-olive.vercel.app',
     'https://react-to-do-olive.vercel.app',
-    '117.0.0.0'
+    'https://117.0.0.0'
 ]
 
 if DEBUG: # Development
