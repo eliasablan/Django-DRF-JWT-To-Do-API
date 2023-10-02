@@ -180,7 +180,6 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOWED_ORIGINS = [
-    'react-to-do-olive.vercel.app',
     'https://react-to-do-olive.vercel.app',
     'https://117.0.0.0'
 ]
