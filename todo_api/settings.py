@@ -3,19 +3,26 @@ from datetime import timedelta
 from decouple import config as dc_config
 import dj_database_url
 import os
+import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+env = environ.Env(
+    # set casting, default value
+    DEBUG=(bool, False),
+    RENDER_EXTERNAL_HOSTNAME=(bool, False)
+)
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = dc_config('SECRET_KEY')
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = dc_config('DEBUG', default=False, cast=bool)
+DEBUG = env('DEBUG')
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -44,9 +51,7 @@ SIMPLE_JWT = {
     "AUTH_HEADER_TYPES": ("Bearer",),
 }
 
-
 # Application definition
-
 INSTALLED_APPS = [
     # Django apps
     'django.contrib.admin',
@@ -98,17 +103,16 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'todo_api.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 # Development
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 # Production
 DATABASES = {
@@ -177,9 +181,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost:5173',
-    'http://localhost:3000',
-    'https://react-to-do-olive.vercel.app'
+    'https://react-to-do-olive.vercel.app',
 ]
 
 
@@ -188,11 +190,8 @@ INTERNAL_IPS = [
 ]
 
 if DEBUG: # Development
-    ALLOWED_HOSTS = env.list()
-    ALLOWED_HOSTS = [dc_config('ALLOWED_HOSTS_DEV')]
-    for host in ALLOWED_HOSTS:
-        print(host)
-    
+    ALLOWED_HOSTS = env.list('ALLOWED_HOSTS_DEV')
+        
     DEBUG_TOOLBAR_PANELS = [
         'debug_toolbar.panels.versions.VersionsPanel',
         'debug_toolbar.panels.timer.TimerPanel',
@@ -216,7 +215,8 @@ if DEBUG: # Development
         'SHOW_TOOLBAR_CALLBACK': show_toolbar
     }
 else: # Production
-    ALLOWED_HOSTS = [dc_config('ALLOWED_HOSTS_PROD')]
-    RENDER_EXTERNAL_HOSTNAME = dc_config('RENDER_EXTERNAL_HOSTNAME', default=False)
+    ALLOWED_HOSTS = env.list('ALLOWED_HOSTS_PROD')
+
+    RENDER_EXTERNAL_HOSTNAME = env('RENDER_EXTERNAL_HOSTNAME')
     if RENDER_EXTERNAL_HOSTNAME:
          ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
