@@ -6,7 +6,7 @@ class Todo(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     todo = models.CharField(max_length=50)
-    slug = models.SlugField(max_length=20, unique=True, blank=True)
+    slug = models.SlugField(max_length=50, unique=True, blank=True)
     finished = models.BooleanField(default=False)
     deleted = models.BooleanField(default=False)
     
