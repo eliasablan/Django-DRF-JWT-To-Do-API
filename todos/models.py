@@ -5,8 +5,8 @@ from django.template.defaultfilters import slugify
 class Todo(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
-    todo = models.CharField(max_length=50)
-    slug = models.SlugField(max_length=50, unique=True, blank=True)
+    todo = models.CharField(max_length=100)
+    slug = models.SlugField(max_length=100, unique=True, blank=True)
     finished = models.BooleanField(default=False)
     deleted = models.BooleanField(default=False)
     
